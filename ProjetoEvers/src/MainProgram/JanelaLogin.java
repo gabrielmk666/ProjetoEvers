@@ -35,6 +35,10 @@ public class JanelaLogin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Projeto Evers Nutracêutica");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setForeground(java.awt.Color.lightGray);
+        setResizable(false);
+        setType(java.awt.Window.Type.POPUP);
         getContentPane().setLayout(null);
 
         jTextFieldLogin.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
@@ -78,6 +82,7 @@ public class JanelaLogin extends javax.swing.JFrame {
         jPasswordFieldSenha.setBounds(330, 110, 160, 30);
 
         jButtonEntrar.setText("Entrar");
+        jButtonEntrar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButtonEntrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonEntrarActionPerformed(evt);
@@ -87,6 +92,7 @@ public class JanelaLogin extends javax.swing.JFrame {
         jButtonEntrar.setBounds(360, 160, 63, 23);
 
         jButtonSair.setText("Sair");
+        jButtonSair.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButtonSair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonSairActionPerformed(evt);

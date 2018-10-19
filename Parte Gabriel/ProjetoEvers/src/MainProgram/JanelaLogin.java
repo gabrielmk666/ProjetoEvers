@@ -99,7 +99,7 @@ public class JanelaLogin extends javax.swing.JFrame {
         getContentPane().add(jButtonSair);
         jButtonSair.setBounds(440, 160, 51, 23);
 
-        jLabelImagemFundo.setIcon(new javax.swing.ImageIcon("C:\\Users\\Usuario\\Desktop\\Projetos\\ProjetoEvers\\ProjetoEvers\\Logo(1).png")); // NOI18N
+        jLabelImagemFundo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagens/Logo(1).png"))); // NOI18N
         getContentPane().add(jLabelImagemFundo);
         jLabelImagemFundo.setBounds(0, 20, 270, 170);
 

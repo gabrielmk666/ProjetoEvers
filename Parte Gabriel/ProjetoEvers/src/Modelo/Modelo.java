@@ -3,7 +3,7 @@ package Modelo;
 public class Modelo {
     
     private String nome;
-    private Double lote;
+    private int lote;
     private String pesquisa;
 
     public String getNome() {
@@ -14,11 +14,11 @@ public class Modelo {
         this.nome = nome;
     }
 
-    public Double getLote() {
+    public Integer getLote() {
         return lote;
     }
 
-    public void setLote(Double lote) {
+    public void setLote(Integer lote) {
         this.lote = lote;
     }
        public String getPesquisa() {

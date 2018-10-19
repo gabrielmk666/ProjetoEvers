@@ -3,6 +3,12 @@ package MainProgram;
 import ConexaoBD.Conexao;
 import ConexaoBD.daoEvers;
 import Modelo.Modelo;
+import Modelo.ModeloTabela;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.*;
 
 /**
  *
@@ -16,6 +22,7 @@ public class JanelaProduto extends javax.swing.JFrame {
     
     public JanelaProduto() {
         initComponents();
+        preencherTabela("select * from produtos order by nome");
     }
 
     /**
@@ -32,15 +39,16 @@ public class JanelaProduto extends javax.swing.JFrame {
         jLabelLote = new javax.swing.JLabel();
         jLabelNome = new javax.swing.JLabel();
         jScrollPaneTabela = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTable = new javax.swing.JTable();
         jTextFieldLote = new javax.swing.JTextField();
         jTextFieldNome = new javax.swing.JTextField();
-        jButtonSalvar = new javax.swing.JButton();
+        jButtonNovo = new javax.swing.JButton();
         jButtonExcluir = new javax.swing.JButton();
         jLabelPesquisa = new javax.swing.JLabel();
         jTextFieldPesquisa = new javax.swing.JTextField();
         jButtonPesquisar = new javax.swing.JButton();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jButtonSalvar = new javax.swing.JButton();
         jLabelCadProdutos = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -64,7 +72,7 @@ public class JanelaProduto extends javax.swing.JFrame {
         jLabelNome.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabelNome.setText("Nome:");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -75,9 +83,10 @@ public class JanelaProduto extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPaneTabela.setViewportView(jTable1);
+        jScrollPaneTabela.setViewportView(jTable);
 
         jTextFieldLote.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jTextFieldLote.setEnabled(false);
         jTextFieldLote.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldLoteActionPerformed(evt);
@@ -85,20 +94,22 @@ public class JanelaProduto extends javax.swing.JFrame {
         });
 
         jTextFieldNome.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jTextFieldNome.setEnabled(false);
         jTextFieldNome.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextFieldNomeActionPerformed(evt);
             }
         });
 
-        jButtonSalvar.setText("Salvar");
-        jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
+        jButtonNovo.setText("Novo");
+        jButtonNovo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonSalvarActionPerformed(evt);
+                jButtonNovoActionPerformed(evt);
             }
         });
 
         jButtonExcluir.setText("Excluir");
+        jButtonExcluir.setEnabled(false);
         jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonExcluirActionPerformed(evt);
@@ -116,10 +127,23 @@ public class JanelaProduto extends javax.swing.JFrame {
         });
 
         jButtonPesquisar.setText("Pesquisar");
+        jButtonPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPesquisarActionPerformed(evt);
+            }
+        });
 
         jComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jComboBox1ActionPerformed(evt);
+            }
+        });
+
+        jButtonSalvar.setText("Salvar");
+        jButtonSalvar.setEnabled(false);
+        jButtonSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSalvarActionPerformed(evt);
             }
         });
 
@@ -128,13 +152,21 @@ public class JanelaProduto extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(30, 30, 30)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabelPesquisa)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonPesquisar))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(44, 44, 44)
+                        .addGap(55, 55, 55)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelNome)
                             .addComponent(jLabelLote, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -144,13 +176,7 @@ public class JanelaProduto extends javax.swing.JFrame {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jTextFieldLote, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 497, Short.MAX_VALUE)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabelPesquisa)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextFieldPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonPesquisar)))
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(143, 143, 143))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
@@ -160,9 +186,9 @@ public class JanelaProduto extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(23, 23, 23)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabelNome, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jTextFieldNome, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -173,10 +199,13 @@ public class JanelaProduto extends javax.swing.JFrame {
                                 .addComponent(jTextFieldLote, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jButtonNovo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonSalvar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonExcluir, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 123, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 103, Short.MAX_VALUE)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldPesquisa, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -224,7 +253,7 @@ public class JanelaProduto extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVoltarActionPerformed
-        System.exit(0);
+        dispose();
     }//GEN-LAST:event_jButtonVoltarActionPerformed
 
     private void jTextFieldLoteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldLoteActionPerformed
@@ -235,12 +264,11 @@ public class JanelaProduto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldNomeActionPerformed
 
-    private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-        med.setNome(jTextFieldNome.getText());
-        med.setLote(Double.parseDouble(jTextFieldLote.getText()));
-        control.Salvar(med);
-        Limpar();
-    }//GEN-LAST:event_jButtonSalvarActionPerformed
+    private void jButtonNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoActionPerformed
+          jTextFieldLote.setEnabled(true);
+          jTextFieldNome.setEnabled(true);
+          jButtonSalvar.setEnabled(true);
+    }//GEN-LAST:event_jButtonNovoActionPerformed
 
     private void jTextFieldPesquisaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPesquisaActionPerformed
         // TODO add your handling code here:
@@ -254,9 +282,81 @@ public class JanelaProduto extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
+    private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
+        jTable.getValueAt(jTable.getSelectedRow(),1);
+        con.conexao();
+        con.executaSQL("select * from produtos where lote ='"+jTextFieldPesquisa+"'");
+        try{
+        con.rs.first();
+            do{
+                jTable.getColumnModel().getColumn(0).setPreferredWidth(23);
+                jTable.getColumnModel().getColumn(0).setResizable(false);
+                
+                jTable.getColumnModel().getColumn(1).setPreferredWidth(180);
+                jTable.getColumnModel().getColumn(1).setResizable(false);
+                
+                jTable.getTableHeader().setReorderingAllowed(false);
+                jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                con.desconecta();
+            }while(con.rs.next());
+            
+        }catch(SQLException ex){
+           JOptionPane.showMessageDialog(rootPane,"Erro ao criar o Jtable \n"+ex);
+        }
+                
+    }//GEN-LAST:event_jButtonPesquisarActionPerformed
+
+    private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
+        requer();
+        med.setNome(jTextFieldNome.getText());
+        med.setLote(Integer.parseInt(jTextFieldLote.getText()));
+        control.Salvar(med);
+        jButtonExcluir.setEnabled(false);
+        Limpar();
+    }//GEN-LAST:event_jButtonSalvarActionPerformed
+
     public void Limpar(){
         jTextFieldNome.setText("");
         jTextFieldLote.setText("");
+    }
+    
+    public void requer(){
+            if(jTextFieldNome.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null,"Preencha os campos para continuar...");
+            }
+            if(jTextFieldLote.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null,"Preencha os campos para continuar...");
+            }
+    }
+    
+    public void preencherTabela(String Sql){
+        ArrayList dados = new ArrayList();
+        String[] colunas = new String[]{"nome","lote"};
+        con.conexao();
+        con.executaSQL(Sql);
+        
+        try{
+        con.rs.first();
+            do{
+            dados.add(new Object[]{con.rs.getString("nome"),con.rs.getDouble("lote")});
+            }while(con.rs.next());
+            
+        }catch(SQLException ex){
+           JOptionPane.showMessageDialog(rootPane,"Erro ao criar o Jtable \n"+ex);
+        }
+        
+        ModeloTabela modelo = new ModeloTabela(dados,colunas);
+        
+                jTable.setModel(modelo);
+                jTable.getColumnModel().getColumn(0).setPreferredWidth(23);
+                jTable.getColumnModel().getColumn(0).setResizable(false);
+                
+                jTable.getColumnModel().getColumn(1).setPreferredWidth(180);
+                jTable.getColumnModel().getColumn(1).setResizable(false);
+                
+                jTable.getTableHeader().setReorderingAllowed(false);
+                jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+                con.desconecta();
     }
     /**
      * @param args the command line arguments
@@ -295,6 +395,7 @@ public class JanelaProduto extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonExcluir;
+    private javax.swing.JButton jButtonNovo;
     private javax.swing.JButton jButtonPesquisar;
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JButton jButtonVoltar;
@@ -305,7 +406,7 @@ public class JanelaProduto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelPesquisa;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPaneTabela;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable jTable;
     private javax.swing.JTextField jTextFieldLote;
     private javax.swing.JTextField jTextFieldNome;
     private javax.swing.JTextField jTextFieldPesquisa;

@@ -1,9 +1,11 @@
 package Modelo;
 
 import java.util.ArrayList;
+import javax.swing.table.AbstractTableModel;
 
-public class ModeloTabela {
-     private ArrayList linhas = null;
+public class ModeloTabela extends AbstractTableModel{
+    
+    private ArrayList linhas = null;
     private String[] colunas = null;
     
     public ModeloTabela(ArrayList lin, String[] col){

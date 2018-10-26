@@ -22,7 +22,7 @@ public class JanelaProduto extends javax.swing.JFrame {
     
     public JanelaProduto() {
         initComponents();
-        preencherTabela("select * from produtos order by nome");
+       // preencherTabela("select * from produtos order by nome");
     }
 
     /**
@@ -283,26 +283,31 @@ public class JanelaProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBox1ActionPerformed
 
     private void jButtonPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarActionPerformed
-        jTable.getValueAt(jTable.getSelectedRow(),1);
-        con.conexao();
-        con.executaSQL("select * from produtos where lote ='"+jTextFieldPesquisa+"'");
-        try{
-        con.rs.first();
-            do{
-                jTable.getColumnModel().getColumn(0).setPreferredWidth(23);
-                jTable.getColumnModel().getColumn(0).setResizable(false);
-                
-                jTable.getColumnModel().getColumn(1).setPreferredWidth(180);
-                jTable.getColumnModel().getColumn(1).setResizable(false);
-                
-                jTable.getTableHeader().setReorderingAllowed(false);
-                jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-                con.desconecta();
-            }while(con.rs.next());
-            
-        }catch(SQLException ex){
-           JOptionPane.showMessageDialog(rootPane,"Erro ao criar o Jtable \n"+ex);
-        }
+       
+      While(con.rs.next()){
+          preencherTabela("select * from produtos where lote ='"+jTextFieldPesquisa+"'");
+      }  
+
+       // jTable.getValueAt(jTable.getSelectedRow(),1);
+       // con.conexao();
+       // con.executaSQL("select * from produtos where lote ='"+jTextFieldPesquisa+"'");
+       // try{
+       // con.rs.first();
+       //     do{
+       //         jTable.getColumnModel().getColumn(0).setPreferredWidth(23);
+       //         jTable.getColumnModel().getColumn(0).setResizable(false);
+       //         
+       //         jTable.getColumnModel().getColumn(1).setPreferredWidth(180);
+       //         jTable.getColumnModel().getColumn(1).setResizable(false);
+       //         
+       //         jTable.getTableHeader().setReorderingAllowed(false);
+       //         jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+       //         con.desconecta();
+       //     }while(con.rs.next());
+       //     
+       // }catch(SQLException ex){
+       //    JOptionPane.showMessageDialog(rootPane,"Erro ao criar o Jtable \n"+ex);
+       // }
                 
     }//GEN-LAST:event_jButtonPesquisarActionPerformed
 

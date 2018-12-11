@@ -97,6 +97,8 @@ public class JanelaPrincipal extends javax.swing.JFrame {
     private void jMenuItemProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemProdutoActionPerformed
         JanelaProduto jan = new JanelaProduto();
         jan.setVisible(true);
+        JanelaPrincipal jane = new JanelaPrincipal();
+        jane.setVisible(false);
     }//GEN-LAST:event_jMenuItemProdutoActionPerformed
 
     /**
